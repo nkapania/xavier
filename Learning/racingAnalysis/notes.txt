@@ -1,0 +1,8 @@
+turn1: splice fast genmap, up the mu to .97
+turn2: a little too much at around s = 1100 - slow down.
+turn3: splice fast genmap, up mu to .97
+turn4: slide out - slow down a bit.
+turn5: splice gunnar map? keep speed the same.
+turn 8: why slow? unclear. maybe up mu to .95 or .96.
+turn 10: very slow here. throttle is not full. should either up Kx or increase mu
+turn 14/15: splice in fast genmap/drop mu. 

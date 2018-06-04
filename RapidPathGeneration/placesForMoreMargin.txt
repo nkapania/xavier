@@ -1,0 +1,14 @@
+turn 2 end (only about 25 cm until bound) - poor tracking
+turn 4 left apex - poor tracking
+turn 5 entry and exit, apex fine. Note that for exit we are following bounds.
+turn 13 exit, off to left rumble strip - poor tracking
+turn 15 exit, off to left rumble strip - tracking fine
+on main straight, keep car on left side
+
+
+more buffer: [488 - 770]
+more buffer: [1119 - 1236]
+more buffer: [1271 - 1405]
+more buffer: [3192 - 3237]
+more buffer: [4088 - 4221]
+stay in center: [4305 - 4668]
