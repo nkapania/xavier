@@ -25,9 +25,8 @@ function veh = getVehicle(tireType, mapMatchType)
     
     %veh.alphaFrontTable=[-veh.alphaFslide:.001:veh.alphaFslide];   % vector of front alpha (rad)
     %veh.alphaRearTable =[-veh.alphaRslide:.001:veh.alphaRslide];   % vector of rear alpha (rad)
-    nT = 250;
-    veh.alphaFrontTable = linspace(-veh.alphaFslide,veh.alphaFslide, nT); 
-    veh.alphaRearTable  = linspace(-veh.alphaRslide,veh.alphaRslide, nT);
+    veh.alphaFrontTable = linspace(alphaFslide, alphaRslide, 
+    veh.alphaRearTable  = linspace(alphaRslide, 
     
     
     if strcmp(tireType,'linear')
