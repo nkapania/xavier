@@ -33,6 +33,9 @@ function [simout, lapTime] = bikeSim(world, veh, ts, velocityProfile, ilc)
 
         %check to see if we are at the end of the map.
         if s > world.s(end) - .55; break; end
+%         if i == 100
+%             break
+%         end
         
         %check to see if we have gone off the track
          if abs(e) > 5
