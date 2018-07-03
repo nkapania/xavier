@@ -36,6 +36,8 @@ M(:,19) = sim.alphaFdes;
 M(:,20) = sim.alphaRdes;
 M(:,21) = sim.FxFFW + sim.FxDrag;
 M(:,22) = sim.FxST;
+M(:,23) = sim.FxF;
+M(:,24) = sim.FxR;
 
 
 csvwrite('~/Desktop/research/PySim/unitTest.csv', M)
