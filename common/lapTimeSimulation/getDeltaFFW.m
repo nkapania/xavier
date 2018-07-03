@@ -3,7 +3,7 @@
 
 %Nitin Kapania, 6/10/2013
 
-function [deltaFFW,alphaFdes,alphaRdes,betaFFW] =  getDeltaFFW(K, Ux, veh)
+function [deltaFFW,alphaFdes,alphaRdes,betaFFW, FyFdes, FyRdes] =  getDeltaFFW(K, Ux, veh)
 %#codegen
 
     FyFdes = veh.b/veh.L*veh.m*Ux^2*K;

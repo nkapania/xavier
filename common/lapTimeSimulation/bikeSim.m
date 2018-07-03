@@ -48,7 +48,7 @@ function [simout, lapTime] = bikeSim(world, veh, ts, velocityProfile, ilc)
             
 
         %calculate steering inputs
-        [deltaFFW,alphaFdes,alphaRdes,betaFFW] =  getDeltaFFW(K, Ux, veh);    
+        [deltaFFW,alphaFdes,alphaRdes,betaFFW, FyFdes, FyRdes] =  getDeltaFFW(K, Ux, veh);    
         deltaFB = -veh.kLK*(e + veh.xLA*sin(dPsi+betaFFW));
         
         %turn off FFW steering if we are simulating ILC and interp ILC commands.
@@ -117,8 +117,9 @@ function [simout, lapTime] = bikeSim(world, veh, ts, velocityProfile, ilc)
         simout.delta(i) = delta; simout.deltaFFW(i) = deltaFFW; simout.deltaFB(i) = deltaFB;
         simout.t(i) = t; simout.beta(i) = atan(Uy/Ux); simout.e(i) = e; simout.dPsi(i) = dPsi;
         simout.alphaF(i) = alphaF; simout.alphaR(i) = alphaR; simout.alphaFdes(i) = alphaFdes; simout.alphaRdes(i) = alphaRdes;
-         simout.curvature(i) = K; simout.initStatus(i) = initStatus; simout.FxFB(i) = FxFB;
-        
+        simout.curvature(i) = K; simout.initStatus(i) = initStatus; simout.FxFB(i) = FxFB;
+        simout.betaFFW(i) = betaFFW; simout.FyFdes(i) = FyFdes; simout.FyRdes(i) = FyRdes; simout.FxDrag(i) = FxDrag; simout.FxDrag = FxDrag;
+         
         %perform state update and increment counter
         Uy = Uy + ts*dUy;
         r  =  r + ts*dr;

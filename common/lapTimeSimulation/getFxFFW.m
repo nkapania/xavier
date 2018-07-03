@@ -37,7 +37,7 @@ function [FxFFW, FxDrag, FxST,UxDesired,AxDesired, brakeMode] =  getFxFFW(s, vxC
     aeroDrag      = fdrag*vxCG*vxCG;
     inclinedDrag  = -m*g*sin(grade);  %negative sign due to GPS convention for grade
     FxDrag = turningDrag+rollResistance+aeroDrag+inclinedDrag;  
-
+    %FxDrag = rollResistance + aeroDrag;
     
     %%%%%%%%%%%%%%%%%%%%%% STATE MACHINE LOGIC %%%%%%%%%%%%%%%%%%%%
     
