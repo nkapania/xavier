@@ -38,7 +38,8 @@ M(:,21) = sim.FxFFW + sim.FxDrag;
 M(:,22) = sim.FxST;
 M(:,23) = sim.FxF;
 M(:,24) = sim.FxR;
-
+M(:,25) = sim.FyF;
+M(:,26) = sim.FyR;
 
 csvwrite('~/Desktop/research/PySim/unitTest.csv', M)
 disp('File Saved')  
