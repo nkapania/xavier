@@ -1,6 +1,6 @@
 close all; clear all; clc;
 addpath(genpath('common'))
-load '/home/nkapania/Desktop/research/simulation/common/maps/simpleRace.mat'
+load '~/research/simulation/common/maps/simpleRace.mat'
 path = world; path.isOpen = 0;
 
 veh = getVehicle('nonlinear','euler');
