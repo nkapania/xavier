@@ -3,7 +3,7 @@ addpath(genpath('common'))
 load '~/research/simulation/common/maps/simpleRace.mat'
 path = world; path.isOpen = 0;
 
-veh = getVehicle('nonlinear','euler');
+veh = getVehicle('nonlinear','closest');
 vp = generateSpeedTrajectory(path, veh);
 
 ts = .01;
@@ -40,8 +40,11 @@ M(:,23) = sim.FxF;
 M(:,24) = sim.FxR;
 M(:,25) = sim.FyF;
 M(:,26) = sim.FyR;
+M(:,27) = sim.posE;
+M(:,28) = sim.posN;
+M(:,29) = sim.psi;
 
-csvwrite('~/Desktop/research/PySim/unitTest.csv', M)
+csvwrite('~/research/PySim/unitTest.csv', M)
 disp('File Saved')  
 
 
