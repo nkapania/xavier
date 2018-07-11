@@ -3,7 +3,7 @@ addpath(genpath('common'))
 load '~/research/simulation/common/maps/simpleRace.mat'
 path = world; path.isOpen = 0;
 
-veh = getVehicle('nonlinear','closest');
+veh = getVehicle('nonlinear','euler');
 vp = generateSpeedTrajectory(path, veh);
 
 ts = .01;
