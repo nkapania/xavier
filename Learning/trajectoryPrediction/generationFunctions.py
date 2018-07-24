@@ -1,6 +1,6 @@
 import numpy as np
 
-def generateTrajectory(xEnd, yStart, yEnd, psiStart, psiEnd):
+def generateTrajectory(trajLength, yStart, yEnd, psiStart, psiEnd, pointsPerMeter = 10.):
 	#Given start and end conditions, generates polynomial coefficients for a 3rd order cubic trajectory
 
 	#First generate unit trajectory with correct heading angle
@@ -8,9 +8,10 @@ def generateTrajectory(xEnd, yStart, yEnd, psiStart, psiEnd):
 	dy1 = np.tan(psiEnd)
 
 	a = _generateUnitTrajectory(yStart, yEnd, dy0, dy1)
-	a = _transformUnitTrajectory(a, xEnd)
+	a = _transformUnitTrajectory(a, trajLength)
+	x,y = _generatePointCloud(a, trajLength, trajLength * pointsPerMeter)
 
-	return a
+	return x,y
 
 
 def _generateUnitTrajectory(y0, y1, dy0, dy1):
@@ -45,11 +46,24 @@ def _transformUnitTrajectory(a, xStretch, yStretch = 1., xShift = 0., yShift = 0
 
 	return a
 
-def generatePointCloud(a, L, N):
+def _generatePointCloud(a, L, N):
 	#plots trajectory given coefficients, number of points, and start and end x
 	x = np.linspace(0 , L ,N)
-	x = x[:, np.newaxis]
-
+	
 	y = a[0]*x**3 + a[1]*x**2 + a[2]*x + a[3]
 
+	#also compute maxAy
+	ay = _computeMaxAccel(x, y, a)
+
+
 	return x,y
+
+def _computeMaxAccel(x, y, a):
+	#given polynomial coeffients and points to sample, compute acceleration
+	#at each point
+
+	#to be implemenetd
+	ay = None
+
+
+
