@@ -1,53 +1,61 @@
 import numpy as np 
-#from tqdm import tqdm
+from tqdm import tqdm
 import matplotlib.pyplot as plt 
 from generationFunctions import *
+import time
+import pdb
 
 ##################################################################
-################ INITIALIZE HYPER PARAMETERS #####################
+################ INITIALIZE PARAMETERS #####################
 ##################################################################
 
-NUM_TRAJECTORIES = int(2.5E8)
+#Trajectories and geometric constants
+NUM_TRAJECTORIES = int(8.0E4) #need this many to generate collision trajectories
 TRAJ_LENGTH = 200 #meters
-POINTS_PER_METER = .01
+
+POINTS_PER_METER = 2
 METERS_PER_MILE = 1609.34 
 NUM_PTS = int(TRAJ_LENGTH * POINTS_PER_METER)
 
-initial_offset = 2.0 #meters - center of opposite lane
+ROAD_WIDTH = 8.0 #meters
+MEDIAN_POSITION = ROAD_WIDTH / 2
+
+initial_offset = MEDIAN_POSITION / 2 #meters - center of opposite lane
 initial_heading = 0.0 #degrees 
+
+
+
 offset_stddev = 0.5 #meters 
 heading_stddev   = 2.0 * np.pi / 180 #radians
-
 ##################################################################
 ############# INITIALIZE ARRAYS###################################
 ##################################################################
-yStart = initial_offset + offset_stddev*np.random.randn(NUM_TRAJECTORIES,1)
-yEnd   = yStart + offset_stddev*np.random.randn(NUM_TRAJECTORIES,1)
-psiStart = initial_heading + heading_stddev*np.random.randn(NUM_TRAJECTORIES, 1) #vehicle heading in radians
-psiEnd = psiStart + heading_stddev*np.random.randn(NUM_TRAJECTORIES, 1) 
+X = []
+Y = []
 
-X = np.zeros(( NUM_PTS , NUM_TRAJECTORIES))
-Y = np.zeros(( NUM_PTS , NUM_TRAJECTORIES))
-
-# plt.plot(yStart)
-# plt.show()
-
-# ###################################################################
-# ############### GENERATE SAMPLE TRAJECTORIES ######################
-# ###################################################################
+####################################################################
+################ GENERATE SAMPLE TRAJECTORIES ######################
+####################################################################
 
 # print("Generating Trajectories!")
-# for i in tqdm(range(NUM_TRAJECTORIES)):
-# 	X[:,i], Y[:,i] = generateTrajectory(TRAJ_LENGTH, yStart[i], yEnd[i], psiStart[i], psiEnd[i], POINTS_PER_METER)
 
+tic = time.time()
+for i in tqdm(range(NUM_TRAJECTORIES)):
+    yStart = initial_offset + offset_stddev*np.random.randn()
+    yEnd   = yStart + offset_stddev*np.random.randn()
+    psiStart = initial_heading + heading_stddev*np.random.randn() #vehicle heading in radians
+    psiEnd = psiStart + heading_stddev*np.random.randn()
+    x, y = generateTrajectory(TRAJ_LENGTH, yStart, yEnd, psiStart, psiEnd, POINTS_PER_METER)
+
+toc = time.time()
+ttime = t2 - t1
 
 miles_simulated = TRAJ_LENGTH * NUM_TRAJECTORIES / METERS_PER_MILE
 print("%d miles simulated" %miles_simulated)
-
-
-# ####################################################################
-# ###################### PLOT INTERESTING TRAJECTORIES ###############
-# ####################################################################
+print("Elapsed time is %d seconds" %ttime)
+#####################################################################
+####################### PLOT INTERESTING TRAJECTORIES ###############
+#####################################################################
 
 # plt.plot(X,Y)
 # plt.ylim(0,8)
