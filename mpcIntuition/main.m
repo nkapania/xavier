@@ -12,7 +12,7 @@ Ux = 20; tMax = 5; e0 = 2;
 
 
 %% MPC unconstrained
-[yLQR, t, xLQR, deltaLQR] = mympc(veh, Ux, tMax, e0);
+[yMPC, t, xMPC, deltaMPC] = mympc(veh, Ux, tMax, e0);
 
 
 %% MPC constrained

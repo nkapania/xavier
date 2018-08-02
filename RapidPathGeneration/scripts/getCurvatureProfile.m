@@ -3,7 +3,9 @@ function opt = getCurvatureProfile(world, velocityProfile, veh)
     %TUNABLE PARAMETERS %%%%%%%%%%%%%%%%%%%%%%%%%
     lam0  = 1;  %weight on minimum curvature. should be 1 by default, but can be zero for testing purposes.
     lam1 =  1; %weight on steering regularization
-    lam2 =  abs(interp1(world.lam2.s, world.lam2.weights, world.s, 'linear','extrap')); %weight on minimimum distance
+    %lam2 =  abs(interp1(world.lam2.s, world.lam2.weights, world.s, 'linear','extrap')); %weight on minimimum distance
+    lam2 = zeros(size(world.s)); %set to 0 for testing purposes
+    
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     N = numel(world.s); s= world.s; K = world.K; Ux = velocityProfile.Ux;    
