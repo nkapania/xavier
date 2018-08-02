@@ -1,6 +1,6 @@
 clear all; close all; clc;
-addpath(genpath('C:\Users\ddl\Desktop\nkapania\simulation\common'));
-addpath(genpath('.\scripts'));
+addpath(genpath('/home/nkapania/xavier/common'))
+addpath(genpath('/home/nkapania/xavier/RapidPathGeneration/scripts'));
 
 %get vehicle, road friction, and the buffer around the track edge,
 %as well as simulation sample time
