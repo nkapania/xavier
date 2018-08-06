@@ -2,7 +2,8 @@ close all; clear all; clc;
 %load('C:\Users\ddl\Desktop\nkapania\simulation\common\maps\simpleRace.mat'); path = world; path.isOpen = 0;path.bank = zeros(len(path.s),3); path.grade = zeros(len(path.s),3);
 addpath(genpath('common'))
 %path = genWorldFromCSV('thunderhill_race.csv');
-load '/home/nkapania/Desktop/research/simulation/common/maps/thunderhill_race.mat'; path = mapWorld; path.isOpen = 0;
+load('/home/nkapania/xavier/common/maps/thunderhill_race.mat');
+path = mapWorld; path.isOpen = 0;
 %bounds = load('thunderhill_bounds_shifted.mat');
 
 veh = getVehicle('nonlinear','embed');

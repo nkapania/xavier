@@ -1,10 +1,10 @@
 close all; clear all; clc;
 addpath(genpath('common'))
-load '~/research/simulation/common/maps/rightTurnRFSdownsample.mat'
-path = world; path.isOpen = 0;
+load('/home/nkapania/xavier/common/maps/cpgOpen.mat')
+path = world; path.isOpen = 1;
 
 veh = getVehicle('nonlinear','closest');
-vp = generateSpeedTrajectory(path, veh);
+vp = generateSpeedTrajectory(path, veh, 0.5);
 
 ts = .01;
 [sim, lapTime] = bikeSim(path, veh, ts, vp);
@@ -44,7 +44,7 @@ M(:,27) = sim.posE;
 M(:,28) = sim.posN;
 M(:,29) = sim.psi;
 
-csvwrite('~/research/PySim/unitTest.csv', M)
-disp('File Saved')  
+%csvwrite('~/research/PySim/unitTest.csv', M)
+%disp('File Saved')  
 
 

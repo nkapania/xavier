@@ -2,10 +2,9 @@ function [x, delta] = mpcHelperFcn(A, B, x0, N, R)
 %Calls cvx
 
 disp('Solving Convex Problem...')
-cvx_begin 
-     variable delta(N,1)
+cvx_begin quiet
+     variable delta(1, N)
      variable x(4,N)
-     variable costs(N,1)
 
 
      %standard lqr formulation - better way to do this
@@ -23,7 +22,7 @@ cvx_begin
 
 cvx_end
 
-
+x = x; %transpose results
 
 end
 

@@ -26,11 +26,11 @@ x0 = [e0; 0 ; 0; 0];
 R = 1000;
 
 %simulate:
-t = linspace(0, tmax, 1000);
+t = linspace(0, tMax, 1000);
 dt = t(2) - t(1);
 
 yMPC = zeros(size(t));
-xMPC = zeros(len(t), 4); 
+xMPC = zeros(4, len(t)); 
 deltaMPC = zeros(size(t)); 
 
 
@@ -38,18 +38,28 @@ deltaMPC = zeros(size(t));
 
 
 counter = 0;
-xMPC(1,:) = 
-yMPC(1,:) = 
-deltaMPC(1,:) = 
+xMPC(:,1) = x0;
+yMPC(1) = e0;
+deltaMPC(1) = deltaSolved(1); %apply first input in receding horizon fashion
 
 for i = 2:len(t)
+    
+    %calculate input - don't do this every time step because MPC is slow
     if counter < ts
         counter = counter + dt; %only solve mpc problem every ts seconds
-        deltaMPC(i) = 
+        deltaMPC(i) = deltaMPC(i-1);
     else
         counter = 0; %reset counter
-        [xSolved, deltaSolved] = mpcHelperFcn(A, B, xMPC(i,:)', N, R);
+        [xSolved, deltaSolved] = mpcHelperFcn(A, B, xMPC(:,i-1), N, R);
+        deltaMPC(i) = deltaSolved(1); %apply first input in recreding horizon fashion
     end
+    
+    %update state
+    dxdt = Ac * xMPC(:,i-1) + Bc * deltaMPC(i);
+    xMPC(:,i) = xMPC(:,i) + dxdt * dt; 
+    yMPC(i) = xMPC(1,i);
+    
+end
     
     
     

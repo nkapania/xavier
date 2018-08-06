@@ -2,7 +2,7 @@
 %contains three arrays: The distance along path (s), desired velocity at
 %every point in space, and desired acceleration at every point in space. 
 
-function prof = generateSpeedTrajectory(path, veh)
+function prof = generateSpeedTrajectory(path, veh, accel)
     disp('Generating Speed');
     
 %     %%default code: just drive at 5 m/s (12 mph)
@@ -13,8 +13,8 @@ function prof = generateSpeedTrajectory(path, veh)
 %Performance limits
     g=9.81;
     vmax=99;
-    axmax=0.7*g;
-    aymax=0.7*g;
+    axmax=accel*g;
+    aymax=accel*g;
        
     Nsteps = length(path.s);
 
