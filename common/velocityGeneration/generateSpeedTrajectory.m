@@ -64,7 +64,7 @@ function prof = generateSpeedTrajectory(path, veh, accel)
     prof.Ax = ax;
     prof.s = path.s;
     
-    plot(prof.s, prof.Ax)
+%     plot(prof.s, prof.Ax)
 
     
 end

@@ -10,7 +10,7 @@ function [world] = updateWorld(refWorld, opt, bounds)
     
     %update buffer and lam2
     world.buff = updateBuffer(world, refWorld);
-    world.lam2 = updateLam2( world, refWorld); 
+%    world.lam2 = updateLam2( world, refWorld); 
 
     %recompute lane width
     world = getLaneWidth( world, bounds);
