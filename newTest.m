@@ -1,14 +1,13 @@
 close all; clear all; clc;
 addpath(genpath('common'))
-load('/home/nkapania/xavier/common/maps/cpgOpen.mat')
-path = world; path.isOpen = 1;
+load('/home/nkapania/xavier/common/maps/THrace.mat')
+path = world; path.isOpen = 0;
 
 veh = getVehicle('nonlinear','closest');
-vp = generateSpeedTrajectory(path, veh, 0.5);
+vp = generateSpeedTrajectoryClosed(path, veh, 0.5, 0.5);
 
 ts = .01;
 [sim, lapTime] = bikeSim(path, veh, ts, vp);
-
 
 plot(sim.s, sim.e)
 
