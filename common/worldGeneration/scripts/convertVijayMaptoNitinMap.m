@@ -6,9 +6,12 @@
 
 %load Vijay's map
 clear all; close all; clc;
-vijayWorld = load('/home/nkapania/xavier/common/maps/cpg_clean.mat');
+vijayWorld = load('/home/nkapania/Desktop/slow_lap_8_20.mat');
 
 %%
+
+discretizationLength = .25/3;
+duplicateOffset = .01; 
 
 %create s from EN
 sRaw= zeros(size(vijayWorld.x))';
@@ -22,7 +25,7 @@ for i = 2:len(sRaw)
     
     %get rid of duplicate points
     if sRaw(i) == sRaw(i-1)
-        sRaw(i) = sRaw(i) + .01;
+        sRaw(i) = sRaw(i) + duplicateOffset;
     end
 end
 
@@ -30,7 +33,7 @@ end
 
 
 %downsample to a point every 25 cm
-s = 0:.25:sRaw(end); s = s';
+s = 0:discretizationLength:sRaw(end); s = s';
 
 %interpolate to get roadE and roadN
 roadE = interp1(sRaw, x, s);
@@ -38,16 +41,6 @@ roadN = interp1(sRaw, y, s);
 
 %get psi from EN
 roadPsi = getPsiFromEN(roadE, roadN);
-
-%% HACK ALERT: above function did weird things for backwards compatability
-%with quill. We want smooth psi function, so do the following:
-shiftInd = 2291;
-shiftAmount = 2 * pi;
-roadPsi(shiftInd:end) = roadPsi(shiftInd:end) + shiftAmount;
-
-%% may also need to make the world start from 0 to 2*pi
-roadPsi = roadPsi - 2*pi;
-%plot(roadPsi)
 
 %%
 %finally, get curvature - do this by hacking from genWorldFromEN
