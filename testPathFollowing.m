@@ -18,11 +18,14 @@ vp = getVelocityProfile(world, veh1, mu, 99,.95);
 grid on; hold on; axis equal;
 plot(sim.posE, sim.posN,'r');
 plot(world.roadE, world.roadN);
+legend('Actual','Desired')
 
 figure;
-plot(sim.t, sim.alphaF*180/pi)
+plot(sim.t, sim.alphaF*180/pi,'b')
 hold on;
 plot(sim.t, sim.alphaR*180/pi,'r')
+plot(sim.t, sim.alphaFdes*180/pi,'b--')
+plot(sim.t, sim.alphaRdes*180/pi,'r--')
 
 figure;
 plot(sim.t, sim.UxDesired);
@@ -32,3 +35,9 @@ plot(sim.t, sim.Ux,'r');
 
 figure;
 plot(sim.t, sim.FxFB);
+
+figure;
+plot(sim.t, sim.delta    *180/pi);
+hold on; grid on; axis equal;
+plot(sim.t, sim.deltaFFW *180/pi,'r');
+plot(sim.t, sim.deltaFB  * 180/pi,'k');
