@@ -5,9 +5,11 @@ path = world; path.isOpen = 0;
 
 veh = getVehicle('nonlinear','closest');
 vp = generateSpeedTrajectoryClosed(path, veh, 0.9, 0.9);
+plot(vp.s, vp.Ux)
+%vp = getVelocityProfile(path, veh, 1.04, 99, 1.0);
 
-ts = .01;
-[sim, lapTime] = bikeSim(path, veh, ts, vp);
+%ts = .01;
+%[sim, lapTime] = bikeSim(path, veh, ts, vp);
 
 
 %%

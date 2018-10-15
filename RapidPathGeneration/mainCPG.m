@@ -10,7 +10,7 @@ NUM_ITERS = 1;
 %get centerline description
 %refWorld = genWorldFromCSV('THcenter.csv'); 
 
-load CPGcenter.mat; refWorld = world; refWorld.isOpen = 0;  %Just load the centerline path since it has been modified to be continuous
+load cpgOpen.mat; refWorld = world; refWorld.isOpen = 0;  %Just load the centerline path since it has been modified to be continuous
 bounds = load('cpg_winding_track.mat');
 
 %%%%%%%%%% HACK - add in a little more buffer at a few parts of the track -
@@ -18,15 +18,15 @@ bounds = load('cpg_winding_track.mat');
 %%%%%%%%%% specified mat file.
 
 buff.s = [0  ;  refWorld.s(end)];
-buff.b = [1  ;  1];
+buff.b = [0  ;  0];
 
 %buff.b = .4*ones(size(buff.s));
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 refWorld.buff = buff;
 %refWorld = getLaneWidth(refWorld, bounds);
-refWorld.widthLeft = 4 * ones(size(refWorld.s));
-refWorld.widthRight = -4 * ones(size(refWorld.s));
+refWorld.widthLeft = 1 * ones(size(refWorld.s));
+refWorld.widthRight = -1 * ones(size(refWorld.s));
 
 %%
 

@@ -39,6 +39,6 @@ function world = genWorldFromEN(posE, posN)
     world.K = (x1.*y2 - y1.*x2)./sqrt((x1.^2 + y1.^2).^3);
     world.roadPsi = getPsiFromEN(x, y);
 
-    world.road_IC = [psi(1); world.roadE(1); world.roadN(1)];
+    world.road_IC = [world.roadPsi(1); world.roadE(1); world.roadN(1)];
     
 end

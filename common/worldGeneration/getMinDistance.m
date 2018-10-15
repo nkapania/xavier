@@ -67,5 +67,4 @@ function shortest = getMinDistance(point, line)
     end
         
         
-        
 end

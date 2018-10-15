@@ -8,7 +8,7 @@ path = mapWorld; path.isOpen = 0;
 
 veh = getVehicle('nonlinear','embed');
 %%
-mu = .90; ts = .01;
+mu = .95; ts = .01;
 veh1 = veh; veh1.powerLimit = Inf;
 vp = getVelocityProfileBG(path, veh1, mu, 99,.95);
 
