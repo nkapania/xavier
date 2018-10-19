@@ -4,7 +4,7 @@ addpath(genpath('common'))
 %load('/home/nkapania/xavier/common/maps/thunderhill_race.mat'); 
 load('/home/nkapania/xavier/common/maps/joeFunkeSuperSpeedway_newSkidpad_flat.mat')
 
-veh = getVehicle('nonlinear','closest');
+veh = getVehicle('nonlinear','embed');
 %%
 mu = 0.90; ts = .01;
 veh1 = veh; veh1.powerLimit = Inf;
