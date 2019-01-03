@@ -6,13 +6,15 @@ addpath(genpath('/home/nkapania/xavier/RapidPathGeneration/scripts'));
 %as well as simulation sample time
 veh = getVehicle('nonlinear','closest'); mu = .95; sampleTime = .01;  
 NUM_ITERS = 1;
-laneWidth = 3.5;
+%laneWidth = 3.5;
 
 %get centerline description
-refWorld = genWorldFromCSV('simpleOval.csv'); 
+%refWorld = genWorldFromCSV('THcenter.mat'); 
+load THcenter.mat
 
 %load simpleOval.mat; refWorld.isOpen = 0;  %Just load the centerline path since it has been modified to be continuous
-bounds = generateBounds(refWorld, laneWidth);
+%bounds = generateBounds(refWorld, laneWidth);
+bounds = load('/home/nkapania/xavier/common/roadEdges/thunderhill_bounds_shifted.mat')
 
 %%%%%%%%%% HACK - add in a little more buffer at a few parts of the track -
 %%%%%%%%%% better way is to link this to EN coordinates from a user
