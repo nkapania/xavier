@@ -1,4 +1,4 @@
-function [A, B, C] = getSystemMatrices(ts)
+function [A, B, C] = getSystemMatrices(Ux, K, ts)
 
     %%vehicle parameters
 
@@ -8,8 +8,6 @@ function [A, B, C] = getSystemMatrices(ts)
     b = 1.25; %m
     a = 1.25; 
     Iz = m*a*b;
-    Ux = 10; %treat as a constant for MPC matrix for now
-    K = 0; %treat as a constant for now
 
     %% form lateral dynamics matrix
     Alat = [0 Ux Ux 0; 0 0 0 1; 0 0 -Cr/(m*Ux) b*Cr/(m*Ux^2)-1; 0 0 b*Cr/Iz -Cr*b^2/(Iz*Ux)];
@@ -24,9 +22,9 @@ function [A, B, C] = getSystemMatrices(ts)
     Cc = [Clat; 0; 0];
 
     %discretize matrices
-    [A B1] = myc2d(Ac, [Bc Cc], ts);
-    B = B1(:,1);
-    C = B1(:,2);
+    [A, B1] = myc2d(Ac, [Bc Cc], ts);
+    B = B1(:,1:2);
+    C = B1(:,3);
 
 
 end
