@@ -1,62 +1,73 @@
 clear all; close all; clc; 
-addpath(genpath('/home/nkapania/xavier/common/'))
-%% specify parameters
-nt = 50; %number of steps in horizon
-ts = 0.1; %step size
-Ux = 10; %assume fixed Ux for lateral dynamics for now;
-K = 0; %assume a straight road for now; 
-[A, B, C] = getSystemMatrices(Ux, K, ts);
+ts = 0.1; %time step
+tf = 10; %simulate for tf seconds
+t = 0:ts:tf; %time array
+N = length(t);
+xP = 30; %desired stopping location, meters
 
-nx = size(A, 1); %number of states
-nu = size(B, 2); %number of inputs
+%arrays
+s = zeros(N,1); s(1) = 0; %position
+Ux = zeros(N,1); Ux(1) = 10.0; %initial velocity, m/s
+dUx = zeros(N,1); %acceleration
+Fx = zeros(N,1); %force
 
-x0 = [0; 0; 0; 0; 0; Ux];
-%state ordering: e, dPsi, beta, r, s, sdot
+%physical parameters
+m = 1500; %passenger vehicle mass
+frr = 250; %rolling resistance
+dragCoeff = 0.7; %v^2 drag
+nt = 50; 
 
-Q = eye(nx); 
-R = eye(nu) / 10000; 
-%% form concatenated matrices
-Qcell = repmat({Q}, 1, nt);
-Qbig = blkdiag(Qcell{:});
+%precompute MPC params to save execution time
+U = zeros(nt-1, N);
+Sopt = zeros(nt, N);
+UxOpt = zeros(nt, N);
+slack1 = zeros(1, N);
+slack2 = zeros(1, N);
+
+%bounds on u
+uBounds = [-5 0];
+
+for i = 1:N-1
+    x0 = [s(i); Ux(i)];
+    [ax, U(1:nt-1,i), Sopt(1:nt,i), UxOpt(1:nt,i), slack1(i), slack2(i)] = getFxMPC(m, ts, nt, x0, xP, uBounds); %also store the solution vector
+    Fx(i) = ax*m;
+    dUx(i) = (Fx(i) - frr - dragCoeff*Ux(i)^2) / m;
     
-Rcell = repmat({R}, 1, nt-1);
-Rbig = blkdiag(Rcell{:});
-%% solve convex problem 
-cvx_begin
-    variable x(nx*nt, 1)
-    variable u(nu*(nt-1), 1)
-    minimize(x'*Qbig*x + u'*Rbig*u); %quad form 
+    Ux(i+1) = Ux(i) + ts * dUx(i);
+    if (Ux(i+1) < 0)
+        Ux(i+1) = 0;
+    end
+    s(i+1)  = s(i)  + ts * Ux(i); 
     
-    subject to
-        for i = 1 : (nt-1)
-           x(nx*i+1 : (i+1)*nx ) == A * x( nx*(i-1) + 1 : nx*i )  + B * u( nu*i-1 : nu*i)
-        end
-        x(1:nx) == x0;
-        x(end) == 0; %stop at the end
-        x(end-1) == 40; %stop at 30 meters
+end
 
-cvx_end
+%%
+subplot(2,1,1)
+plot(t(1:N), Ux);
+ylabel('Ux m/s')
 
+subplot(2,1,2);
+plot(t(1:N), s);
+ylabel('s (m)')
+xlabel('t (sec)')
+ylim([0 xP])
+hold on;
+plot([0 t(end)], [xP xP],'r');
 
-%% plot problem results
-x = reshape(x, [nx, nt]);
-e = x(1,:)';
-dPsi = x(2,:)';
-beta = x(3,:)';
-r = x(4,:)';
-s = x(5,:)'; 
-sdot = x(6,:)';
-
-u = reshape(u, [nu, nt-1]);
-Fyf = u(1,:); 
-Fx  = u(2,:);
-
-plot(ts*(1:nt), e); xlabel('time (sec)'); ylabel('lat error (m)');
-figure; 
-plot(ts*(1:nt-1), Fyf); xlabel('time (sec)'); ylabel('lat force (N)');
 figure;
-plot(ts*(1:nt-1), Fx); xlabel('time (sec)'); ylabel('long force (N)');
+plot(t(1:N), dUx);
+xlabel('t (sec)');
+ylabel('Accel');
+
 figure;
-plot(ts*(1:nt), sdot); xlabel('time (sec)'); ylabel('Speed (m/s)');
+plot(U);
 figure;
-plot(ts*(1:nt), s); xlabel('time (sec)'); ylabel('s (m)');
+plot(Sopt);
+figure
+plot(UxOpt);
+
+figure;
+plot(slack1);
+
+figure;
+plot(slack2);
